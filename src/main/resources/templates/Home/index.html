@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Album List</title>
 </head>
 <body>
 
-<h1>Albumlist</h1>
+<h1>Album List</h1>
 
-
-<table>
-    <thead>
-      <tr>Id</tr>
-      <tr>Title</tr>
-      <tr>Release Year</tr>
-      <tr>Artst</tr>
-      <tr>Label</tr>
-    </thead>
-
-  <body>
-    <tr th:each="album: ${albumList}">
-      <td th:text=${album.album_id}" />
-
-
-
-    </tr>
-
-  </body>
-
+<table border="1">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Release Year</th>
+    <th>Artist</th>
+    <th>Label</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="album : ${albumList}">
+    <td th:text="${album.albumId}"></td>
+    <td th:text="${album.title}"></td>
+    <td th:text="${album.releaseYear}"></td>
+    <td th:text="${album.artistName}"></td>
+    <td th:text="${album.labelName}"></td>
+  </tr>
+  </tbody>
 </table>
-
 
 </body>
 </html>

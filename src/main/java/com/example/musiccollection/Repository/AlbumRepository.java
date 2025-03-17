@@ -16,24 +16,39 @@ public class AlbumRepository
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public void addAlbum(Album album){
-        String sql = "INSERT INTO Album (title, release_year, artist_id, label_id)  VALUES(?, ?, ?, ?)";
-        jdbcTemplate.update(sql, album.getTitle(), album.getRelease_year(), album.getArtist_id(), album.getLabel_id());
+
+    public List<Album> fetchAll() {
+        String sql = "SELECT a.album_id, a.title, a.release_year, " +
+                "COALESCE(art.name, '') AS artist_name, " +
+                "COALESCE(lbl.name, '') AS label_name " +
+                "FROM Album a " +
+                "LEFT JOIN Artist art ON a.artist_id = art.artist_id " +
+                "LEFT JOIN RecordLabel lbl ON a.label_id = lbl.label_id";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Album album = new Album();
+            album.setAlbumId(rs.getInt("album_id"));
+            album.setTitle(rs.getString("title"));
+            album.setReleaseYear(rs.getInt("release_year"));
+            album.setArtistName(rs.getString("artist_name"));
+            album.setLabelName(rs.getString("label_name"));
+            return album;
+        });
     }
 
-    public List<Album> fetchAll()
-    {
-        String sql = "SELECT * FROM Album";
-        RowMapper<Album> rowMapper = new BeanPropertyRowMapper<>(Album.class);
-        return jdbcTemplate.query(sql, rowMapper);
 
+
+    public void addAlbum(Album album) {
+        String sql = "INSERT INTO Album (title, release_year, artist_id, label_id) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, album.getTitle(), album.getReleaseYear(), album.getArtistId(), album.getLabelId());
     }
+
 
 
     public void updateAlbum(Album album)
     {
         String sql = "UPDATE Album SET title = ?, release_year = ?, artist_id = ?, label_id = ? WHERE album_id = ?";
-        jdbcTemplate.update(sql, album.getTitle(), album.getRelease_year(), album.getArtist_id(), album.getLabel_id());
+        jdbcTemplate.update(sql, album.getTitle(), album.getReleaseYear(), album.getArtistId(), album.getLabelId());
     }
 
     public void deleteAlbum(int album_id)

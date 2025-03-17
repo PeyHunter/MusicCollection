@@ -2,51 +2,70 @@ package com.example.musiccollection.Model;
 
 public class Album
 {
-    private int album_id;
+    private int albumId;
     private String title;
-    private int release_year;
-    private int artist_id;
-    private int label_id;
+    private int releaseYear;
+    private String artistName;
+    private String labelName;
+    private int artistId;
+    private int labelId;
 
     public Album()
-    {}
-
-    //MED ALBUM ID CONSTRUCTOREN
-    public Album(int album_id, String title, int release_year, int artist_id, int label_id) {
-        this.album_id = album_id;
-        this.title = title;
-        this.release_year = release_year;
-        this.artist_id = artist_id;
-        this.label_id = label_id;
-    }
-
-    //UDEN ALBUM ID CONSTRUCTOREN
-    public Album(String title, int release_year, int artist_id, int label_id)
     {
-        this.title = title;
-        this.release_year = release_year;
-        this.artist_id = artist_id;
-        this.label_id = label_id;
     }
+
+    public Album(int albumId, String title, int releaseYear, String artistName, String labelName)
+    {
+        this.albumId = albumId;
+        this.title = title;
+        this.releaseYear = releaseYear;
+        this.artistName = artistName;
+        this.labelName = labelName;
+    }
+
+    // Getters and Setters
+    public int getAlbumId()
+    {
+        return albumId;
+    }
+
+    public int getArtistId()
+    {
+        return artistId;
+    }
+
+    public int getLabelId()
+    {
+        return labelId;
+    }
+
 
     public String getTitle()
     {
         return title;
     }
 
-    public int getRelease_year()
+    public int getReleaseYear()
     {
-        return release_year;
+        return releaseYear;
     }
 
-    public int getArtist_id()
+    public String getArtistName()
     {
-        return artist_id;
+        return artistName;
     }
 
-    public int getLabel_id()
+
+    public String getLabelName()
     {
-        return label_id;
+        return labelName;
+    }
+
+
+
+    public void setAlbumId(int albumId)
+    {
+        this.albumId = albumId;
     }
 
     public void setTitle(String title)
@@ -54,18 +73,18 @@ public class Album
         this.title = title;
     }
 
-    public void setRelease_year(int release_year)
+    public void setReleaseYear(int releaseYear)
     {
-        this.release_year = release_year;
+        this.releaseYear = releaseYear;
     }
 
-    public void setArtist_id(int artist_id)
+    public void setArtistName(String artistName)
     {
-        this.artist_id = artist_id;
+        this.artistName = artistName;
     }
 
-    public void setLabel_id(int label_id)
+    public void setLabelName(String labelName)
     {
-        this.label_id = label_id;
+        this.labelName = labelName;
     }
 }

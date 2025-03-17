@@ -13,8 +13,6 @@ public class AlbumService
     @Autowired
     AlbumRepository albumRepository;
 
-
-
     public List<Album> fetchAll()
     {
         return albumRepository.fetchAll();
