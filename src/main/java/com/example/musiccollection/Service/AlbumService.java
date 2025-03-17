@@ -1,13 +1,27 @@
-package com.example.musiccollection.ServiceDAO;
+package com.example.musiccollection.Service;
 
 import com.example.musiccollection.Model.Album;
 import com.example.musiccollection.Repository.AlbumRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AlbumService
 {
-    private AlbumRepository albumRepository;
+    @Autowired
+    AlbumRepository albumRepository;
+
+
+
+    public List<Album> fetchAll()
+    {
+        return albumRepository.fetchAll();
+    }
+
+
+
 
     public void addAlbum(Album album)
     {
@@ -17,6 +31,7 @@ public class AlbumService
         }
         albumRepository.addAlbum(album);
     }
+
 
 
 }
