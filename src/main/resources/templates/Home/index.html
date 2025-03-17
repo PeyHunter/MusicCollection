@@ -29,5 +29,29 @@
   </tbody>
 </table>
 
+<br>
+<br>
+<br>
+
+<<form action="/add" method="post">
+  <label>Title:</label>
+  <input type="text" name="title" required><br>
+
+  <label>Release Year:</label>
+  <input type="number" name="releaseYear" required><br>
+
+  <label>Artist:</label>
+  <select name="artistId" required>
+    <option value="">-- Select an Artist --</option>
+    <option th:each="artist : ${artistList}" th:value="${artist.artistId}" th:text="${artist.name}"></option>
+  </select>
+  <br>
+
+  <label>Label Name:</label>
+  <input type="text" name="labelName" required><br>
+
+  <button type="submit">Save Album</button>
+</form>
+
 </body>
 </html>
