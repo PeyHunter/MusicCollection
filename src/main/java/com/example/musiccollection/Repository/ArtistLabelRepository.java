@@ -26,7 +26,7 @@ public class ArtistLabelRepository
 
     public ArtistLabel findArtistLabelById(int id)
     {
-        String sql = "SELECT * FROM ArtistLabel WHERE address_id = ?";
+        String sql = "SELECT * FROM ArtistLabel WHERE label_id = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(ArtistLabel.class), id);
     }
 

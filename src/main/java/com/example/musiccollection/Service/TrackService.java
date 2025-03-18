@@ -17,7 +17,7 @@ public class TrackService
     @Autowired
     TrackRepository trackRepository;
 
-    public List<Track> fetchAllTracks()
+    public List<Track> fetchAllTrack()
     {
         return trackRepository.fetchAllTrack();
     }

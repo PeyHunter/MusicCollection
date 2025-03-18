@@ -14,13 +14,23 @@ public class Album
     {
     }
 
-    public Album(int albumId, String title, int releaseYear, String artistName, String labelName)
+    public Album(String title, int releaseYear, int artistId, int labelId)
+    {
+
+        this.title = title;
+        this.releaseYear = releaseYear;
+        this.artistId = artistId;
+        this.labelId = labelId;
+    }
+
+
+    public Album(int albumId, String title, int releaseYear, int artistId, int labelId)
     {
         this.albumId = albumId;
         this.title = title;
         this.releaseYear = releaseYear;
-        this.artistName = artistName;
-        this.labelName = labelName;
+        this.artistId = artistId;
+        this.labelId = labelId;
     }
 
     // Getters and Setters
