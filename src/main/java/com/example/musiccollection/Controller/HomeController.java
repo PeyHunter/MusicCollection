@@ -25,14 +25,14 @@ public class HomeController
     @GetMapping("/")
     public String index(Model model)
     {
-        List<Album> albumList = albumService.fetchAll();
+        List<Album> albumList = albumService.fetchAllAlbum();
         model.addAttribute("albumList", albumList);
         return "Home/index";
     }
 
     @GetMapping("/add")
     public String addForm(Model model) {
-        List<Artist> artistList = artistService.fetchAll();  // Get all artists
+        List<Artist> artistList = artistService.fetchAllArtist();  // Get all artists
         model.addAttribute("artistList", artistList);  // Pass artists to the form
         model.addAttribute("album", new Album());  // Empty album object to bind form fields
         return "Home/add";  // Show the album form

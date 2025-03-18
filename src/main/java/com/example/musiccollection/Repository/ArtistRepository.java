@@ -27,7 +27,7 @@ public class ArtistRepository {
     }
 
     // Fetch an artist by their ID
-    public Artist fetchArtistById(int artistId) {
+    public Artist findArtistById(int artistId) {
         String sql = "SELECT * FROM Artist WHERE artist_id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{artistId}, (rs, rowNum) -> {
             Artist artist = new Artist();

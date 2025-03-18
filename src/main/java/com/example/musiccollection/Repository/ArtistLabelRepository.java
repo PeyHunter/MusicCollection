@@ -18,7 +18,7 @@ public class ArtistLabelRepository
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<ArtistLabel> fetchAllAddress()
+    public List<ArtistLabel> fetchAllArtistLabel()
     {
         String sql = "SELECT * FROM ArtistLabel";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ArtistLabel.class));
