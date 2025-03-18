@@ -2,17 +2,34 @@ package com.example.musiccollection.Model;
 
 public class Address
 {
+    private int addressId;
     private String street;
     private String city;
-    private int postal_code;
+    private int postalCode;
     private String country;
 
-    public Address(String street, String city, int postal_code, String country)
+    public Address(){}
+
+    public Address(int addressId, String street, String city, int postalCode, String country)
+    {
+        this.addressId = addressId;
+        this.street = street;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
+    }
+
+    public Address(String street, String city, int postalCode, String country)
     {
         this.street = street;
         this.city = city;
-        this.postal_code = postal_code;
+        this.postalCode = postalCode;
         this.country = country;
+    }
+
+    public int getAddressId()
+    {
+        return addressId;
     }
 
     public String getStreet()
@@ -25,14 +42,19 @@ public class Address
         return city;
     }
 
-    public int getPostal_code()
+    public int getPostalCode()
     {
-        return postal_code;
+        return postalCode;
     }
 
     public String getCountry()
     {
         return country;
+    }
+
+    public void setAddressId(int addressId)
+    {
+        this.addressId = addressId;
     }
 
     public void setStreet(String street)
@@ -45,9 +67,9 @@ public class Address
         this.city = city;
     }
 
-    public void setPostal_code(int postal_code)
+    public void setPostalCode(int postalCode)
     {
-        this.postal_code = postal_code;
+        this.postalCode = postalCode;
     }
 
     public void setCountry(String country)

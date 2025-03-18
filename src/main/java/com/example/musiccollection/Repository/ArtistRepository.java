@@ -15,7 +15,7 @@ public class ArtistRepository {
 
 
     // Fetch all artists from the database
-    public List<Artist> fetchAll() {
+    public List<Artist> fetchAllArtist() {
         String sql = "SELECT * FROM Artist";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Artist artist = new Artist();
@@ -27,7 +27,7 @@ public class ArtistRepository {
     }
 
     // Fetch an artist by their ID
-    public Artist fetchById(int artistId) {
+    public Artist fetchArtistById(int artistId) {
         String sql = "SELECT * FROM Artist WHERE artist_id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{artistId}, (rs, rowNum) -> {
             Artist artist = new Artist();
@@ -51,8 +51,8 @@ public class ArtistRepository {
     }
 
     // Delete an artist from the database
-    public void deleteArtist(int artistId) {
+    public boolean deleteArtist(int artistId) {
         String sql = "DELETE FROM Artist WHERE artist_id = ?";
-        jdbcTemplate.update(sql, artistId);
+        return jdbcTemplate.update(sql, artistId) > 0;
     }
 }

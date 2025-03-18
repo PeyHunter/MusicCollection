@@ -17,7 +17,7 @@ public class ArtistService
 
     public List<Artist> fetchAll()
     {
-        return artistRepository.fetchAll();
+        return artistRepository.fetchAllArtist();
     }
 
 

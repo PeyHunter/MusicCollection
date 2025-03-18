@@ -17,7 +17,7 @@ public class AlbumRepository
     JdbcTemplate jdbcTemplate;
 
 
-    public List<Album> fetchAll() {
+    public List<Album> fetchAllAlbum() {
         String sql = "SELECT a.album_id, a.title, a.release_year, " +
                 "COALESCE(art.name, '') AS artist_name, " +
                 "COALESCE(lbl.name, '') AS label_name " +
@@ -43,19 +43,24 @@ public class AlbumRepository
         jdbcTemplate.update(sql, album.getTitle(), album.getReleaseYear(), album.getArtistId(), album.getLabelId());
     }
 
-
-
     public void updateAlbum(Album album)
     {
         String sql = "UPDATE Album SET title = ?, release_year = ?, artist_id = ?, label_id = ? WHERE album_id = ?";
         jdbcTemplate.update(sql, album.getTitle(), album.getReleaseYear(), album.getArtistId(), album.getLabelId());
     }
 
-    public void deleteAlbum(int album_id)
+    public Album findAlbumById(int albumId) {
+        String sql = "SELECT * FROM Album WHERE album_id = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Album.class), albumId);
+    }
+
+    public boolean deleteAlbum(int albumId)
     {
         String sql = "DELETE FROM Album WHERE album_id = ?";
-        jdbcTemplate.update(sql, album_id);
+        return jdbcTemplate.update(sql, albumId) > 0;
     }
+
+
 
 
 }
