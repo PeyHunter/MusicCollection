@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AlbumService
@@ -23,17 +24,34 @@ public class AlbumService
         return albumRepository.fetchAllAlbum();
     }
 
+    public int findAvailibleAlbumId()
+    {
+        List<Album> albums = albumRepository.fetchAllAlbum();
+
+        List<Integer> existingIds = albums.stream().map(Album::getAlbumId).collect(Collectors.toList());
+
+        int newId = 1;
+
+        while (existingIds.contains(newId))
+        {
+            newId++;
+        }
+        return newId;
+
+    }
 
     public void addAlbum(Album album)
     {
         try
         {
-
-
             if (album.getTitle() == null || album.getTitle().isEmpty())
             {
                 throw new IllegalArgumentException("Album title cannot be empty");
             }
+
+            int availibleId = findAvailibleAlbumId();
+            album.setAlbumId(availibleId);  
+
             albumRepository.addAlbum(album);
             logger.info("Album added:" + album.getTitle());
         } catch (Exception e)
@@ -58,7 +76,6 @@ public class AlbumService
     {
         return albumRepository.deleteAlbum(albumId);
     }
-
 
 
 }

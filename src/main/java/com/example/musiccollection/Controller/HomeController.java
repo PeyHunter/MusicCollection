@@ -33,8 +33,6 @@ public class HomeController
 
 
 
-
-
     @GetMapping("/")
     public String index(Model model)
     {
@@ -58,6 +56,8 @@ public class HomeController
 
         return "Home/index";
     }
+
+
 
     @GetMapping("/addAlbum")
     public String showAddAlbumForm(Model model) {
@@ -86,13 +86,17 @@ public class HomeController
             albumService.addAlbum(newAlbum);  // Save the album
 
             // Redirect to the list of albums after adding the new one
-            return "redirect:/";
+            return "redirect:/#albums";
         } catch (Exception e) {
             e.printStackTrace();  // Print the error for debugging
             model.addAttribute("error", "An error occurred while adding the album.");
             return "addAlbum";
         }
     }
+
+
+
+
 
     @PostMapping("/addTrack")
     public String addTrack(@ModelAttribute Track track) {
