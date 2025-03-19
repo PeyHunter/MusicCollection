@@ -1,7 +1,8 @@
 :root {
     --primary-color: #fc1a00;
-    --secondary-color: #b01605;
+    --secondary-color: #19fc00;
     --background-color: #000000;
+
     --text-color: #333;
 }
 
@@ -48,8 +49,6 @@ gap: 20px;
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 20px; /* Space between columns */
-
-
 }
 
 .container {
@@ -121,13 +120,28 @@ input, select {
     gap: 10px;
     width: 100%;
 }
+
+.add-album-form {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Align labels and inputs */
+    gap: 10px 20px;
+    align-items: center;
+    width: 100%; /* Ensures form takes full width */
+    max-width: 800px; /* Match the table width */
+    margin-top: 20px;
+}
+
+.parenthesis {
+    font-size: 14px;
+}
+
+
 .add-btn {
     grid-column: span 2; /* Makes the button span both columns */
     justify-self: end;
     display: block;
-    margin: px;
     padding: 8px 16px;
-    background-color: var(--secondary-color);
+    background-color: #19fc00;
     color: black;
     border: 0.7px solid black;
     border-radius: 10px;
@@ -143,14 +157,11 @@ input, select {
 
 }
 
-.parenthesis {
-    font-size: 14px;
-}
 
 .update-btn {
     display: inline-block;
     padding: 6px 14px;
-    background-color: var(--secondary-color);
+    background-color: #19fc00;
     color: black;
     border: 0.7px solid black;
     border-radius: 10px;
@@ -161,9 +172,11 @@ input, select {
     margin: 3px;
 }
 
+
+
 .update-btn:hover {
     background-color: #4DB910FF;
-
+    color: black;
 }
 
 
