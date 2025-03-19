@@ -32,11 +32,8 @@ public class HomeController
     private RecordLabelService recordLabelService;
 
 
-
     @GetMapping("/")
-    public String index(Model model)
-    {
-        // Fetch all albums, tracks, artists, and record labels
+    public String index(Model model) {
         List<Album> albumList = albumService.fetchAllAlbum();
         List<Track> trackList = trackService.fetchAllTrack();
         List<Artist> artistList = artistService.fetchAllArtist();
@@ -53,6 +50,9 @@ public class HomeController
         model.addAttribute("track", new Track());
         model.addAttribute("artist", new Artist());
         model.addAttribute("recordLabel", new RecordLabel());
+
+        // Add the albumToUpdate to the model, if it exists
+        model.addAttribute("albumToUpdate", new Album());
 
         return "Home/index";
     }
@@ -94,29 +94,74 @@ public class HomeController
         }
     }
 
-
-
-
-
-    @PostMapping("/addTrack")
-    public String addTrack(@ModelAttribute Track track) {
-        trackService.addTrack(track);
-        return "redirect:/";
+    @PostMapping("/deleteAlbum/{albumId}")
+    public String deleteAlbum(@PathVariable("albumId") int albumId)
+    {
+        boolean deleted = albumService.deleteAlbum(albumId);
+        if (deleted)
+        {
+            return "redirect:/#albums";
+        } else
+        {
+            return "redirect:/#albums";
+        }
     }
 
-    @PostMapping("/addArtist")
-    public String addArtist(@ModelAttribute Artist artist) {
-        artistService.addArtist(artist);
-        return "redirect:/";
+    @GetMapping("/updateAlbum/{id}")
+    public String updateAlbum(@PathVariable("id") int id, Model model) {
+        // Fetch the album by ID and add it to the model
+        Album album = albumService.findAlbumById(id);
+
+        // Fetch all artists and record labels to populate the dropdowns in the form
+        List<Artist> artistList = artistService.fetchAllArtist();
+        List<RecordLabel> recordLabelList = recordLabelService.fetchAllRecordLabel();
+
+        // Add attributes to the model
+        model.addAttribute("albumToUpdate", album);  // Add album to model
+        model.addAttribute("artistList", artistList);  // Add artist list
+        model.addAttribute("recordLabelList", recordLabelList);  // Add label list
+
+        // Return the template name for updating the album
+        return "Home/index";  // We'll return the same page
     }
 
-    @PostMapping("/addRecordLabel")
-    public String addRecordLabel(@ModelAttribute RecordLabel recordLabel) {
-        recordLabelService.addRecordLabel(recordLabel);
-        return "redirect:/";
+
+    @PostMapping("/updateAlbum")
+    public String updateAlbum(@ModelAttribute Album album, @RequestParam int artistId, @RequestParam int labelId) {
+        try {
+            // Fetch the artist and record label using the IDs
+            Artist artist = artistService.findArtistById(artistId);
+            RecordLabel recordLabel = recordLabelService.findRecordLabelById(labelId);
+
+            // Check if the artist or label is null
+            if (artist == null || recordLabel == null) {
+                throw new IllegalArgumentException("Invalid artist or label");
+            }
+
+            // Set the artist and record label for the album
+            album.setArtist(artist);
+            album.setRecordLabel(recordLabel);
+
+            // Update the album
+            albumService.updateAlbum(album);
+
+            // Redirect to the homepage after updating the album
+            return "redirect:/";
+        } catch (Exception e) {
+            e.printStackTrace();
+            // In case of errors, redirect back to the homepage
+            return "redirect:/";
+        }
     }
+
+
 
 
 }
+
+
+
+
+
 
 

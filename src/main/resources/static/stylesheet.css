@@ -1,6 +1,6 @@
 :root {
     --primary-color: #fc1a00;
-    --secondary-color: #5cfc00;
+    --secondary-color: #b01605;
     --background-color: #000000;
     --text-color: #333;
 }
@@ -11,9 +11,11 @@ body {
     color: white;
 }
 
+
 h5 {
     text-align: center;
     font-weight: 400;
+    font-size: 17px;
 }
 
 p {
@@ -36,7 +38,12 @@ h2 {
 .margin-block {
     height: 100px;
 }
+.two-columns{
+display: grid;
+grid-template-columns: 1fr 1fr; /* Keeps two columns layout */
+gap: 20px;
 
+}
 .threeColumns {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -46,14 +53,14 @@ h2 {
 }
 
 .container {
-    margin-right: 100px;
-    margin-left: 100px;
+    margin-right: 50px;
+    margin-left: 50px;
 }
 
 
 .table-container {
     width: 800px; /* Set a specific width */
-    height: 700px; /* Set a specific height */
+    height: 650px; /* Set a specific height */
     overflow: auto; /* Enables scrolling */
     border: 1px solid #ccc; /* Optional: Adds a border */
     border-radius: 10px;
@@ -68,27 +75,30 @@ table {
 
 thead {
     font-weight: 500;
-    padding: 4px;
+    height: 40px;
     background-color: white;
     color: black;
     position: sticky;
     top: 0;
     z-index: 2;
 }
+table td:nth-child(1) {
+    text-align: center; /* Centers the Album IDs */
+    color: var(--primary-color); /* Set the text color to the primary color */
+}
 
 thead, tbody, tr, th, td {
     padding: 4px 7px;  /* Increased padding for more space */
     text-align: left;
-    margin-left: 9px;
+    margin-left: 15px;
     border: 1px solid #ccc;
 }
 
 form {
     display: grid;
-    grid-template-columns: auto auto; /* Labels take minimal space, inputs expand */
     gap: 10px 60px; /* Adjust spacing between rows and columns */
     align-items: center; /* Align items vertically */
-    max-width: 400px; /* Set form width */
+    max-width: 100%; /* Set form width */
 }
 
 .label-container label {
@@ -96,6 +106,7 @@ form {
     text-align: right; /* Align text to the right */
     font-weight: bold;
     padding-right: 10px; /* Add spacing between label and input */
+
 }
 
 input, select {
@@ -109,18 +120,15 @@ input, select {
     flex-direction: column;
     gap: 10px;
     width: 100%;
-
-
 }
 .add-btn {
-
     grid-column: span 2; /* Makes the button span both columns */
-    justify-self: end; /* Align button to the right */
+    justify-self: end;
     display: block;
-    margin: 6px 0 19px;
-    padding: 6px 14px;
-    background-color: var(--primary-color);
-    color: white;
+    margin: px;
+    padding: 8px 16px;
+    background-color: var(--secondary-color);
+    color: black;
     border: 0.7px solid black;
     border-radius: 10px;
     font-size: 12px;
@@ -130,7 +138,8 @@ input, select {
 }
 
 .add-btn:hover {
-    background-color: var(--secondary-color);
+    background-color: #4DB910FF;
+    color: black;
 
 }
 
@@ -138,21 +147,41 @@ input, select {
     font-size: 14px;
 }
 
+.update-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: var(--secondary-color);
+    color: black;
+    border: 0.7px solid black;
+    border-radius: 10px;
+    font-size: 12px;
+    justify-content: center;
+    cursor: pointer;
+    font-family: 'Unbounded', sans-serif;
+    margin: 3px;
+}
+
+.update-btn:hover {
+    background-color: #4DB910FF;
+
+}
+
+
 .delete-btn {
-    display: block;
-    margin: 6px 0 14px;
+    display: inline-block;
     padding: 6px 14px;
     background-color: var(--primary-color);
     color: white;
     border: 0.7px solid black;
     border-radius: 10px;
     font-size: 12px;
-    justify-content: end;
+    justify-content: center;
     cursor: pointer;
     font-family: 'Unbounded', sans-serif;
+    margin: 3px;
 }
 
 .delete-btn:hover {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: #B01605FF;
+
 }

@@ -50,7 +50,7 @@ public class AlbumService
             }
 
             int availibleId = findAvailibleAlbumId();
-            album.setAlbumId(availibleId);  
+            album.setAlbumId(availibleId);
 
             albumRepository.addAlbum(album);
             logger.info("Album added:" + album.getTitle());

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Album List</title>
+    <title>Music Collection</title>
     <link rel="stylesheet" href="/stylesheet.css">
 </head>
 <body>
@@ -19,70 +19,84 @@
     <div class="margin-block"></div>
     <div class="margin-block"></div>
 
-    <section id="albums">
-    <h3>Album overview:</h3>
-    <div class="table-container">
-        <div class="two-columns">
-            <table>
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Release Year</th>
-                    <th>Artist</th>
-                    <th>Label</th>
-                    <th>Delete album</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="album : ${albumList}">
-                    <td th:text="${album.albumId}"></td>
-                    <td th:text="${album.title}"></td>
-                    <td th:text="${album.releaseYear}"></td>
-                    <td th:text="${album.artistName}"></td>
-                    <td th:text="${album.labelName}"></td>
-                    <td>
-                        <form action="/deleteAlbum" method="post">
-                            <input type="hidden" name="albumId" th:value="${album.albumId}">
-                            <button type="submit" class="delete-btn">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="two-columns">
+        <section id="albums">
+            <h3>Album overview:</h3>
+            <div class="table-container">
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Artist</th>
+                        <th>Label</th>
+                        <th>Delete</th>
+                        <th>Update</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="album : ${albumList}">
+                        <td th:text="${album.albumId}"></td>
+                        <td th:text="${album.title}"></td>
+                        <td th:text="${album.releaseYear}"></td>
+                        <td th:text="${album.artistName}"></td>
+                        <td th:text="${album.labelName}"></td>
+
+
+                        <td>
+                            <form th:action="@{'/deleteAlbum/' + ${album.albumId}}" method="post">
+                                <input type="hidden" name="albumId" th:value="${album.albumId}">
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </td>
+
+                        <td>
+                            <button type="button" class="update-btn"
+                                    th:onclick="|showUpdateForm(${album.albumId})|">
+                                Update
+                            </button>
+                        </td>
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Add album:</h2>
+
+                    <form action="/addAlbum" method="post">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required>
+
+                        <label for="releaseYear">Year:</label>
+                        <input type="number" id="releaseYear" name="releaseYear" required>
+
+                        <label for="artistId">Artist:</label>
+                        <select id="artistId" name="artistId" required>
+                            <option value="">-- Select an Artist --</option>
+                            <option th:each="artist : ${artistList}" th:value="${artist.artistId}"
+                                    th:text="${artist.name}"></option>
+                        </select>
+                        <label for="labelId">Recordlabel:</label>
+                        <select id="labelId" name="labelId" required>
+                            <option value="">-- Select a Label --</option>
+                            <option th:each="label : ${recordLabelList}" th:value="${label.labelId}"
+                                    th:text="${label.name}"></option>
+                        </select>
+                        <button type="submit" class="add-btn">Add Album</button>
+                    </form>
+
+
+        </section>
     </div>
 
-    <br>
-
-    <div class="threeColumns">
-        <!-- First Column: Title & Button -->
-
-        <form action="/addAlbum" method="post">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
-
-            <label for="releaseYear">Release Year:</label>
-            <input type="number" id="releaseYear" name="releaseYear" required>
-
-            <label for="artistId">Artist:</label>
-            <select id="artistId" name="artistId" required>
-                <option value="">-- Select an Artist --</option>
-                <option th:each="artist : ${artistList}" th:value="${artist.artistId}" th:text="${artist.name}"></option>
-            </select>
-
-            <label for="labelId">Record Label:</label>
-            <select id="labelId" name="labelId" required>
-                <option value="">-- Select a Label --</option>
-                <option th:each="label : ${recordLabelList}" th:value="${label.labelId}" th:text="${label.name}"></option>
-            </select>
-
-            <button type="submit" class="add-btn">Save Album</button>
-        </form>
 
 </div>
 
-    </section>
+
 <div class="margin-block"></div>
 <div class="margin-block"></div>
 

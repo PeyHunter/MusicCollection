@@ -9,6 +9,8 @@ public class Album
     private String labelName;
     private int artistId;
     private int labelId;
+    private Artist artist;
+    private RecordLabel recordLabel;
 
     public Album()
     {
@@ -96,5 +98,13 @@ public class Album
     public void setLabelName(String labelName)
     {
         this.labelName = labelName;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public void setRecordLabel(RecordLabel recordLabel) {
+        this.recordLabel = recordLabel;
     }
 }
