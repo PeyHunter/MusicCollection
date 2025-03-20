@@ -49,6 +49,15 @@ public class Album
         return artistId;
     }
 
+    public Artist getArtist()
+    {
+        return artist;
+    }
+
+    public RecordLabel getRecordLabel()
+    {
+        return recordLabel;
+    }
     public int getLabelId()
     {
         return labelId;

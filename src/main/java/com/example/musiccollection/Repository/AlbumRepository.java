@@ -43,13 +43,13 @@ public class AlbumRepository
         jdbcTemplate.update(sql, album.getTitle(), album.getReleaseYear(), album.getArtistId(), album.getLabelId());
     }
 
+    // Update an existing album with artist and label objects
     public void updateAlbum(Album album) {
         String sql = "UPDATE Album SET title = ?, release_year = ?, artist_id = ?, label_id = ? WHERE album_id = ?";
 
-        // Here, if artistId or labelId is set to 0 (default primitive int value), we don't update them
         jdbcTemplate.update(sql, album.getTitle(), album.getReleaseYear(),
-                album.getArtistId() != 0 ? album.getArtistId() : null,  // Check if artistId is valid
-                album.getLabelId() != 0 ? album.getLabelId() : null,    // Check if labelId is valid
+                album.getArtist() != null ? album.getArtist().getArtistId() : null,  // Update artist_id
+                album.getRecordLabel() != null ? album.getRecordLabel().getLabelId() : null, // Update label_id
                 album.getAlbumId());
     }
 
@@ -65,6 +65,18 @@ public class AlbumRepository
         return jdbcTemplate.update(sql, albumId) > 0;
     }
 
+    private static class AlbumRowMapper implements RowMapper<Album> {
+        @Override
+        public Album mapRow(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {
+            Album album = new Album();
+            album.setAlbumId(rs.getInt("album_id"));
+            album.setTitle(rs.getString("title"));
+            album.setReleaseYear(rs.getInt("release_year"));
+            album.setArtistName(rs.getString("artist_name"));
+            album.setLabelName(rs.getString("label_name"));
+            return album;
+        }
+    }
 
 
 
