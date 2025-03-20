@@ -19,6 +19,10 @@ h5 {
     font-size: 17px;
 }
 
+h3{
+    color: var(--primary-color);
+}
+
 p {
     font-size: 12px;
     font-weight: 300;
@@ -32,7 +36,7 @@ h1 {
 
 h2 {
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     color: var(--primary-color);
 }
 
@@ -105,6 +109,7 @@ form {
     text-align: right; /* Align text to the right */
     font-weight: bold;
     padding-right: 10px; /* Add spacing between label and input */
+    font-size: 15px;
 
 }
 

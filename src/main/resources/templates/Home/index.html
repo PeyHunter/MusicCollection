@@ -36,8 +36,10 @@
                         <th>Update</th>
                     </tr>
                     </thead>
+
                     <tbody>
                     <tr th:each="album : ${albumList}">
+                        <form th:action="@{/updateAlbum}" method="post"></form>
                         <td th:text="${album.albumId}"></td>
                         <td th:text="${album.title}"></td>
                         <td th:text="${album.releaseYear}"></td>
@@ -91,6 +93,7 @@
 
 
         </section>
+
     </div>
 
 
