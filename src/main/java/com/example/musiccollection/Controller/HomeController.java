@@ -125,7 +125,7 @@ public class HomeController
             return "updateAlbum";  // Thymeleaf template for the update form
         } else {
             // If album not found, redirect to the album list page
-            return "redirect:/";
+            return "redirect:/#albums";
         }
     }
 
@@ -154,7 +154,7 @@ public class HomeController
                         albumToUpdate.setRecordLabel(recordLabel); // Set the RecordLabel object (not just the ID)
                     } else {
                         redirectAttributes.addFlashAttribute("error", "Record Label not found.");
-                        return "redirect:/";  // Redirect to index page
+                        return "redirect:/#albums";  // Redirect to index page
                     }
                 }
 
@@ -169,11 +169,11 @@ public class HomeController
                 redirectAttributes.addFlashAttribute("message", "Album updated successfully!");
 
                 // Redirect back to the index page
-                return "redirect:/#album";  // Redirect to index page
+                return "redirect:/#albums";  // Redirect to index page
             } else {
                 // If album not found, show an error
                 redirectAttributes.addFlashAttribute("error", "Album not found.");
-                return "redirect:/#album";  // Redirect to index page
+                return "redirect:/#albums";  // Redirect to index page
             }
         } catch (Exception e) {
             e.printStackTrace();
