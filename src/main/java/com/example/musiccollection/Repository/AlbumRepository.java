@@ -43,11 +43,16 @@ public class AlbumRepository
         jdbcTemplate.update(sql, album.getTitle(), album.getReleaseYear(), album.getArtistId(), album.getLabelId());
     }
 
-    public void updateAlbum(Album album)
-    {
+    public void updateAlbum(Album album) {
         String sql = "UPDATE Album SET title = ?, release_year = ?, artist_id = ?, label_id = ? WHERE album_id = ?";
-        jdbcTemplate.update(sql, album.getTitle(), album.getReleaseYear(), album.getArtistId(), album.getLabelId());
+
+        // Here, if artistId or labelId is set to 0 (default primitive int value), we don't update them
+        jdbcTemplate.update(sql, album.getTitle(), album.getReleaseYear(),
+                album.getArtistId() != 0 ? album.getArtistId() : null,  // Check if artistId is valid
+                album.getLabelId() != 0 ? album.getLabelId() : null,    // Check if labelId is valid
+                album.getAlbumId());
     }
+
 
     public Album findAlbumById(int albumId) {
         String sql = "SELECT * FROM Album WHERE album_id = ?";
@@ -64,4 +69,3 @@ public class AlbumRepository
 
 
 }
-

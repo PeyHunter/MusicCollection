@@ -2,6 +2,9 @@ package com.example.musiccollection.Model;
 
 public class Album
 {
+
+
+
     private int albumId;
     private String title;
     private int releaseYear;

@@ -55,10 +55,12 @@
                         </td>
 
                         <td>
+
                             <button type="button" class="update-btn"
-                                    th:onclick="|showUpdateForm(${album.albumId})|">
+                                    th:onclick="|location.href='/updateAlbum/' + ${album.albumId}|">
                                 Update
                             </button>
+                     
                         </td>
 
 
@@ -69,27 +71,27 @@
 
             <h2>Add album:</h2>
 
-                    <form action="/addAlbum" method="post" class="add-album-form">
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" required>
+            <form action="/addAlbum" method="post" class="add-album-form">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
 
-                        <label for="releaseYear">Year:</label>
-                        <input type="number" id="releaseYear" name="releaseYear" required>
+                <label for="releaseYear">Year:</label>
+                <input type="number" id="releaseYear" name="releaseYear" required>
 
-                        <label for="artistId">Artist:</label>
-                        <select id="artistId" name="artistId" required>
-                            <option value="">-- Select an Artist --</option>
-                            <option th:each="artist : ${artistList}" th:value="${artist.artistId}"
-                                    th:text="${artist.name}"></option>
-                        </select>
-                        <label for="labelId">Recordlabel:</label>
-                        <select id="labelId" name="labelId" required>
-                            <option value="">-- Select a Label --</option>
-                            <option th:each="label : ${recordLabelList}" th:value="${label.labelId}"
-                                    th:text="${label.name}"></option>
-                        </select>
-                        <button type="submit" class="add-btn">Add Album</button>
-                    </form>
+                <label for="artistId">Artist:</label>
+                <select id="artistId" name="artistId" required>
+                    <option value="">-- Select an Artist --</option>
+                    <option th:each="artist : ${artistList}" th:value="${artist.artistId}"
+                            th:text="${artist.name}"></option>
+                </select>
+                <label for="labelId">Recordlabel:</label>
+                <select id="labelId" name="labelId" required>
+                    <option value="">-- Select a Label --</option>
+                    <option th:each="label : ${recordLabelList}" th:value="${label.labelId}"
+                            th:text="${label.name}"></option>
+                </select>
+                <button type="submit" class="add-btn">Add Album</button>
+            </form>
 
 
         </section>

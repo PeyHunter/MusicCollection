@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -107,53 +108,79 @@ public class HomeController
         }
     }
 
-    @GetMapping("/updateAlbum/{id}")
-    public String updateAlbum(@PathVariable("id") int id, Model model) {
-        // Fetch the album by ID and add it to the model
-        Album album = albumService.findAlbumById(id);
-
-        // Fetch all artists and record labels to populate the dropdowns in the form
-        List<Artist> artistList = artistService.fetchAllArtist();
-        List<RecordLabel> recordLabelList = recordLabelService.fetchAllRecordLabel();
-
-        // Add attributes to the model
-        model.addAttribute("albumToUpdate", album);  // Add album to model
-        model.addAttribute("artistList", artistList);  // Add artist list
-        model.addAttribute("recordLabelList", recordLabelList);  // Add label list
-
-        // Return the template name for updating the album
-        return "Home/index";  // We'll return the same page
-    }
 
 
-    @PostMapping("/updateAlbum")
-    public String updateAlbum(@ModelAttribute Album album, @RequestParam int artistId, @RequestParam int labelId) {
-        try {
-            // Fetch the artist and record label using the IDs
-            Artist artist = artistService.findArtistById(artistId);
-            RecordLabel recordLabel = recordLabelService.findRecordLabelById(labelId);
 
-            // Check if the artist or label is null
-            if (artist == null || recordLabel == null) {
-                throw new IllegalArgumentException("Invalid artist or label");
-            }
 
-            // Set the artist and record label for the album
-            album.setArtist(artist);
-            album.setRecordLabel(recordLabel);
 
-            // Update the album
-            albumService.updateAlbum(album);
-
-            // Redirect to the homepage after updating the album
-            return "redirect:/";
-        } catch (Exception e) {
-            e.printStackTrace();
-            // In case of errors, redirect back to the homepage
+    @GetMapping("/updateAlbum/{albumId}")
+    public String showUpdateAlbumForm(@PathVariable("albumId") Integer albumId, Model model) {
+        Album album = albumService.findAlbumById(albumId);
+        if (album != null) {
+            model.addAttribute("album", album);
+            List<Artist> artistList = artistService.fetchAllArtist();
+            List<RecordLabel> recordLabelList = recordLabelService.fetchAllRecordLabel();
+            model.addAttribute("artistList", artistList);
+            model.addAttribute("recordLabelList", recordLabelList);
+            return "updateAlbum";  // Thymeleaf template for the update form
+        } else {
+            // If album not found, redirect to the album list page
             return "redirect:/";
         }
     }
 
+    @PostMapping("/updateAlbum")
+    public String updateAlbum(@RequestParam Integer albumId, @RequestParam String title,
+                              @RequestParam Integer releaseYear, @RequestParam(required = false) Integer artistId,
+                              @RequestParam(required = false) Integer labelId, RedirectAttributes redirectAttributes) {
+        try {
+            // Fetch the album by its ID
+            Album albumToUpdate = albumService.findAlbumById(albumId);
+            if (albumToUpdate != null) {
+                // If artistId and labelId are provided (not null), fetch Artist and RecordLabel
+                if (artistId != null) {
+                    Artist artist = artistService.findArtistById(artistId);
+                    if (artist != null) {
+                        albumToUpdate.setArtist(artist); // Set the Artist object (not just the ID)
+                    } else {
+                        redirectAttributes.addFlashAttribute("error", "Artist not found.");
+                        return "redirect:/";  // Redirect to index page
+                    }
+                }
+
+                if (labelId != null) {
+                    RecordLabel recordLabel = recordLabelService.findRecordLabelById(labelId);
+                    if (recordLabel != null) {
+                        albumToUpdate.setRecordLabel(recordLabel); // Set the RecordLabel object (not just the ID)
+                    } else {
+                        redirectAttributes.addFlashAttribute("error", "Record Label not found.");
+                        return "redirect:/";  // Redirect to index page
+                    }
+                }
+
+                // Update the album details
+                albumToUpdate.setTitle(title);
+                albumToUpdate.setReleaseYear(releaseYear);
+
+                // Save the updated album
+                albumService.updateAlbum(albumToUpdate);
+
+                // Add a success message to the redirectAttributes
+                redirectAttributes.addFlashAttribute("message", "Album updated successfully!");
+
+                // Redirect back to the index page
+                return "redirect:/#album";  // Redirect to index page
+            } else {
+                // If album not found, show an error
+                redirectAttributes.addFlashAttribute("error", "Album not found.");
+                return "redirect:/#album";  // Redirect to index page
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "An error occurred while updating the album.");
+            return "redirect:/";  // Redirect to index page with error
+        }
+    }
 
 
 
