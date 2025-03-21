@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class AddressService
 {
-
     private static final Logger logger = LoggerFactory.getLogger(AddressService.class);
 
     @Autowired
@@ -31,7 +30,7 @@ public class AddressService
         {
             if (address.getStreet() == null || address.getStreet().isEmpty())
             {
-                throw new IllegalArgumentException("Album title cannot be empty");
+                throw new IllegalArgumentException("Address cannot be empty");
             }
             addressRepository.addAddress(address);
             logger.info("Address added:" + address.getStreet());
@@ -58,5 +57,4 @@ public class AddressService
     {
         return addressRepository.deleteAddress(addressId);
     }
-
 }

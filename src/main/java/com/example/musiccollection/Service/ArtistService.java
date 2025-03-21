@@ -1,5 +1,6 @@
 package com.example.musiccollection.Service;
 
+import com.example.musiccollection.Model.Address;
 import com.example.musiccollection.Model.Album;
 import com.example.musiccollection.Model.Artist;
 import com.example.musiccollection.Model.ArtistLabel;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+
 public class ArtistService
 {
 
@@ -20,6 +22,9 @@ public class ArtistService
 
     @Autowired
     ArtistRepository artistRepository;
+
+    @Autowired
+    AddressService addressService;
 
     public List<Artist> fetchAllArtist()
     {
@@ -30,41 +35,44 @@ public class ArtistService
     {
         try
         {
-
-
             if (artist.getName() == null || artist.getName().isEmpty())
             {
                 throw new IllegalArgumentException("Artist title cannot be empty");
             }
             artistRepository.addArtist(artist);
-            logger.info("Album added:" + artist.getName());
+            logger.info("Artist added: " + artist.getName());
         } catch (Exception e)
         {
             logger.error("Error adding Artist: " + e.getMessage());
             throw new RuntimeException("Failed to add artist", e);
-
         }
     }
 
-    public Artist findArtistById(int artist)
-    {
-        return artistRepository.findArtistById(artist);
+    public Artist findArtistById(int artistId) {
+        Artist artist = artistRepository.findArtistById(artistId);
+        Address address = addressService.findAddressById(artist.getAddress().getAddressId());
+        artist.setAddress(address);  // Correctly setting the address
+        logger.info("Artist object: " + artist);  // Log to check if address is set correctly
+        return artist;
     }
+
+
 
     public void updateArtist(Artist artist)
     {
         artistRepository.updateArtist(artist);
     }
 
-    public boolean deleteArtist(int artist)
+    public boolean deleteArtist(int artistId)
     {
-        return artistRepository.deleteArtist(artist);
+        return artistRepository.deleteArtist(artistId);
     }
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+

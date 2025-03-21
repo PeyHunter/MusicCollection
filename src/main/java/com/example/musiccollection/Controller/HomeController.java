@@ -1,13 +1,7 @@
 package com.example.musiccollection.Controller;
 
-import com.example.musiccollection.Model.Album;
-import com.example.musiccollection.Model.Artist;
-import com.example.musiccollection.Model.RecordLabel;
-import com.example.musiccollection.Model.Track;
-import com.example.musiccollection.Service.AlbumService;
-import com.example.musiccollection.Service.ArtistService;
-import com.example.musiccollection.Service.RecordLabelService;
-import com.example.musiccollection.Service.TrackService;
+import com.example.musiccollection.Model.*;
+import com.example.musiccollection.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +18,9 @@ public class HomeController
     private AlbumService albumService;
 
     @Autowired
+    private AddressService addressService;
+
+    @Autowired
     private TrackService trackService;
 
     @Autowired
@@ -32,21 +29,23 @@ public class HomeController
     @Autowired
     private RecordLabelService recordLabelService;
 
-
     @GetMapping("/")
     public String index(Model model) {
+        List<Address> addressList = addressService.fetchAllAddress();
         List<Album> albumList = albumService.fetchAllAlbum();
         List<Track> trackList = trackService.fetchAllTrack();
         List<Artist> artistList = artistService.fetchAllArtist();
         List<RecordLabel> recordLabelList = recordLabelService.fetchAllRecordLabel();
 
         // Add data to the model
+        model.addAttribute("addressList", addressList);
         model.addAttribute("albumList", albumList);
         model.addAttribute("trackList", trackList);
         model.addAttribute("artistList", artistList);
         model.addAttribute("recordLabelList", recordLabelList);
 
         // Add empty album, track, artist, and record label objects for the form
+        model.addAttribute("address", new Address());
         model.addAttribute("album", new Album());
         model.addAttribute("track", new Track());
         model.addAttribute("artist", new Artist());
@@ -58,15 +57,21 @@ public class HomeController
         return "Home/index";
     }
 
+    @GetMapping("/artists")
+    public String getArtists(Model model) {
+        List<Artist> artists = artistService.fetchAllArtist();  // Make sure Address is fetched with Artist
+        model.addAttribute("artistList", artists);
+        return "artists";
+    }
 
 
     @GetMapping("/addAlbum")
-    public String showAddAlbumForm(Model model) {
-        List<Artist> artistList = artistService.fetchAllArtist();  // Fetch artists
-        List<RecordLabel> recordLabelList = recordLabelService.fetchAllRecordLabel();  // Fetch record labels
+    public String addAlbumForm(Model model) {
+        List<Artist> artistList = artistService.fetchAllArtist();
+        List<RecordLabel> recordLabelList = recordLabelService.fetchAllRecordLabel();
         model.addAttribute("artistList", artistList);
         model.addAttribute("recordLabelList", recordLabelList);
-        return "addAlbum";  // Thymeleaf template
+        return "addAlbum";
     }
 
     @PostMapping("/addAlbum")
@@ -95,6 +100,9 @@ public class HomeController
         }
     }
 
+
+
+
     @PostMapping("/deleteAlbum/{albumId}")
     public String deleteAlbum(@PathVariable("albumId") int albumId)
     {
@@ -107,8 +115,6 @@ public class HomeController
             return "redirect:/#albums";
         }
     }
-
-
 
 
 
@@ -144,7 +150,7 @@ public class HomeController
                         albumToUpdate.setArtist(artist); // Set the Artist object (not just the ID)
                     } else {
                         redirectAttributes.addFlashAttribute("error", "Artist not found.");
-                        return "redirect:/";  // Redirect to index page
+                        return "redirect:/#albums";  // Redirect to index page
                     }
                 }
 

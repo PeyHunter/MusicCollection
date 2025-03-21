@@ -58,6 +58,7 @@ public class Album
     {
         return recordLabel;
     }
+
     public int getLabelId()
     {
         return labelId;

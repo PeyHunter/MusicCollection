@@ -1,25 +1,27 @@
 package com.example.musiccollection.Model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 public class Address
 {
-    private int addressId;
+
+    @Id
+    @GeneratedValue
+    private int addressId; // Unique identifier for the address
+
     private String street;
     private String city;
-    private int postalCode;
+    private String postalCode;
     private String country;
 
-    public Address(){}
-
-    public Address(int addressId, String street, String city, int postalCode, String country)
+    // Default constructor
+    public Address()
     {
-        this.addressId = addressId;
-        this.street = street;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.country = country;
     }
 
-    public Address(String street, String city, int postalCode, String country)
+    // Constructor with all fields
+    public Address(String street, String city, String postalCode, String country)
     {
         this.street = street;
         this.city = city;
@@ -27,29 +29,10 @@ public class Address
         this.country = country;
     }
 
+    // Getters and setters for each field
     public int getAddressId()
     {
         return addressId;
-    }
-
-    public String getStreet()
-    {
-        return street;
-    }
-
-    public String getCity()
-    {
-        return city;
-    }
-
-    public int getPostalCode()
-    {
-        return postalCode;
-    }
-
-    public String getCountry()
-    {
-        return country;
     }
 
     public void setAddressId(int addressId)
@@ -57,9 +40,19 @@ public class Address
         this.addressId = addressId;
     }
 
+    public String getStreet()
+    {
+        return street;
+    }
+
     public void setStreet(String street)
     {
         this.street = street;
+    }
+
+    public String getCity()
+    {
+        return city;
     }
 
     public void setCity(String city)
@@ -67,9 +60,19 @@ public class Address
         this.city = city;
     }
 
-    public void setPostalCode(int postalCode)
+    public String getPostalCode()
+    {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode)
     {
         this.postalCode = postalCode;
+    }
+
+    public String getCountry()
+    {
+        return country;
     }
 
     public void setCountry(String country)

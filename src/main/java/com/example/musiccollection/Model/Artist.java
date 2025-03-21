@@ -1,55 +1,61 @@
-package com.example.musiccollection.Model;
+    package com.example.musiccollection.Model;
 
-public class Artist
-{
-    private int artistId;
-    private String name;
-    private int address;
+    import jakarta.persistence.GeneratedValue;
+    import jakarta.persistence.Id;
+    import jakarta.persistence.ManyToOne;
 
-    public Artist()
-    {}
 
-    public Artist(int artistId, String name, int address)
+    public class Artist
     {
-        this.artistId = artistId;
-        this.name = name;
-        this.address = address;
-    }
+        @Id
+        @GeneratedValue
+        private int artistId; // Unique identifier for the artist
 
-    public Artist(String name, int address)
-    {
-        this.name = name;
-        this.address = address;
-    }
 
-    public int getArtistId()
-    {
-        return artistId;
-    }
+        private String name;
 
-    public String getName()
-    {
-        return name;
-    }
+        @ManyToOne
+        private Address address; // Relationship with Address
 
-    public int getAddressId()
-    {
-        return address;
-    }
+        public Artist()
+        {}
 
-    public void setArtistId(int artistId)
-    {
-        this.artistId = artistId;
-    }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+        public Artist(String name, Address address)
+        {
+            this.name = name;
+            this.address = address;
+        }
 
-    public void setAddressId(int address)
-    {
-        this.address = address;
+
+        public int getArtistId()
+        {
+            return artistId;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public Address getAddress()
+        {
+            return address;
+        }
+
+        public void setArtistId(int artistId)
+        {
+            this.artistId = artistId;
+        }
+
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public void setAddress(Address address)
+        {
+            this.address = address;
+        }
     }
-}
 
