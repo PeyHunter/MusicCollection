@@ -86,8 +86,9 @@ thead {
     z-index: 2;
 }
 table td:nth-child(1) {
-    text-align: center; /* Centers the Album IDs */
-    color: var(--primary-color); /* Set the text color to the primary color */
+    text-align: center !important;
+    color: var(--primary-color) !important;
+    font-weight: bold; /* Makes sure it stands out */
 }
 
 thead, tbody, tr, th, td {
