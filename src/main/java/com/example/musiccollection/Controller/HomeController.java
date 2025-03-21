@@ -116,6 +116,11 @@ public class HomeController
         }
     }
 
+    @PostMapping("/deleteArtist/{artistId}")
+    public String deleteArtist(@PathVariable("artistId") int artistId) {
+        boolean deleted = artistService.deleteArtist(artistId);
+        return "redirect:/#artists";
+    }
 
 
 

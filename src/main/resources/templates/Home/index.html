@@ -119,12 +119,9 @@
                         <td th:text="${artist.name}"></td>
                         <td th:text="${artist.address != null ? artist.address.street : 'No address available'}"></td>
                         <td th:text="${artist.address != null ? artist.address.city : 'No city available'}"></td>
-
-
-
-
-
                         <td>
+
+
                             <form th:action="@{'/deleteArtist/' + ${artist.artistId}}" method="post">
                                 <input type="hidden" name="artistId" th:value="${artist.artistId}">
                                 <button type="submit" class="delete-btn">Delete</button>
