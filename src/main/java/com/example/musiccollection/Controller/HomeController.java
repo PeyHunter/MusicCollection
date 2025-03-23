@@ -71,7 +71,7 @@ public class HomeController
         List<RecordLabel> recordLabelList = recordLabelService.fetchAllRecordLabel();
         model.addAttribute("artistList", artistList);
         model.addAttribute("recordLabelList", recordLabelList);
-        return "addAlbum";
+        return "updateArtist";
     }
 
     @PostMapping("/addAlbum")
@@ -96,7 +96,7 @@ public class HomeController
         } catch (Exception e) {
             e.printStackTrace();  // Print the error for debugging
             model.addAttribute("error", "An error occurred while adding the album.");
-            return "addAlbum";
+            return "updateArtist";
         }
     }
 

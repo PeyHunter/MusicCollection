@@ -85,6 +85,7 @@ thead {
     top: 0;
     z-index: 2;
 }
+
 table td:nth-child(1) {
     text-align: center !important;
     color: var(--primary-color) !important;
